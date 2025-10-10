@@ -4,7 +4,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { AlertCircle, ArrowRight, Delete } from "lucide-react";
 
 type Base = "Bin" | "Oct" | "Dec" | "Hex";
 
@@ -13,6 +14,19 @@ const baseMap: Record<Base, number> = {
   Oct: 8,
   Dec: 10,
   Hex: 16,
+};
+
+const getValidKeys = (base: Base): string[] => {
+  switch (base) {
+    case "Bin":
+      return ["0", "1"];
+    case "Oct":
+      return ["0", "1", "2", "3", "4", "5", "6", "7"];
+    case "Dec":
+      return ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    case "Hex":
+      return ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
+  }
 };
 
 export const BaseConverter = () => {
@@ -83,6 +97,26 @@ export const BaseConverter = () => {
     setConvertTo(value);
     validateAndConvert(inputValue, convertFrom, value);
   };
+
+  const handleKeyPress = (key: string) => {
+    const newValue = inputValue + key;
+    setInputValue(newValue);
+    validateAndConvert(newValue, convertFrom, convertTo);
+  };
+
+  const handleBackspace = () => {
+    const newValue = inputValue.slice(0, -1);
+    setInputValue(newValue);
+    validateAndConvert(newValue, convertFrom, convertTo);
+  };
+
+  const handleClear = () => {
+    setInputValue("");
+    setResult("");
+    setError("");
+  };
+
+  const validKeys = getValidKeys(convertFrom);
 
   return (
     <div className="w-full max-w-md mx-auto space-y-6 p-4">
@@ -166,6 +200,40 @@ export const BaseConverter = () => {
             </div>
           </div>
         )}
+      </Card>
+
+      <Card className="p-4 gradient-card border-2 border-primary/20">
+        <div className="space-y-3">
+          <div className="grid grid-cols-4 gap-2">
+            {validKeys.map((key) => (
+              <Button
+                key={key}
+                onClick={() => handleKeyPress(key)}
+                variant="secondary"
+                className="h-14 text-lg font-semibold hover:scale-105 transition-transform"
+              >
+                {key}
+              </Button>
+            ))}
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <Button
+              onClick={handleBackspace}
+              variant="outline"
+              className="h-12 border-destructive/50 hover:bg-destructive/10"
+            >
+              <Delete className="h-5 w-5 mr-2" />
+              Delete
+            </Button>
+            <Button
+              onClick={handleClear}
+              variant="outline"
+              className="h-12 border-accent/50 hover:bg-accent/10"
+            >
+              Clear
+            </Button>
+          </div>
+        </div>
       </Card>
 
       <div className="text-center text-sm text-muted-foreground">
