@@ -2,23 +2,43 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>prog-calc-offline</title>
-    <meta name="description" content="Lovable Generated Project" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#9d5cff" />
+    <title>Programmer's Calculator - Convert Binary, Octal, Decimal, Hex</title>
+    <meta name="description" content="Fast, offline programmer's calculator for converting between Binary, Octal, Decimal, and Hexadecimal number systems. Install on mobile for instant access." />
     <meta name="author" content="Lovable" />
+    <meta name="keywords" content="programmer calculator, number base converter, binary converter, hex converter, octal converter, developer tools" />
 
-    <meta property="og:title" content="prog-calc-offline" />
-    <meta property="og:description" content="Lovable Generated Project" />
+    <meta property="og:title" content="Programmer's Calculator" />
+    <meta property="og:description" content="Convert between Binary, Octal, Decimal, and Hexadecimal - Works offline!" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@lovable_dev" />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Prog Calc" />
+    
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   </head>
 
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => console.log('SW registered'))
+            .catch(err => console.log('SW registration failed'));
+        });
+      }
+    </script>
   </body>
 </html>
