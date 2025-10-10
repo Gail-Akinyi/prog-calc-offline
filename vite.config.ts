@@ -18,7 +18,7 @@ export default defineConfig(({ mode }) => ({
       includeAssets: ["icon-192.png", "icon-512.png", "robots.txt"],
       manifest: {
         name: "Conversions Calc",
-        short_name: "Prog Calc",
+        short_name: "Conversions Calc",
         description: "Convert between Binary, Octal, Decimal, and Hexadecimal number systems",
         theme_color: "#9d5cff",
         background_color: "#1a1e2e",

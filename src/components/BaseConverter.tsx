@@ -119,15 +119,15 @@ export const BaseConverter = () => {
   const validKeys = getValidKeys(convertFrom);
 
   return (
-    <div className="w-full max-w-md mx-auto space-y-6 p-4">
-      <div className="text-center space-y-2">
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+    <div className="w-full h-screen flex flex-col p-3 gap-3">
+      <div className="text-center space-y-1">
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
           🔢 Conversions Calc
         </h1>
-        <p className="text-muted-foreground">Convert between number systems</p>
+        <p className="text-sm text-muted-foreground">Convert between number systems</p>
       </div>
 
-      <Card className="p-6 space-y-6 gradient-card border-2 border-primary/20">
+      <Card className="p-4 space-y-4 gradient-card border-2 border-primary/20 flex-shrink-0">
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="from-base" className="text-foreground font-medium">
@@ -202,25 +202,25 @@ export const BaseConverter = () => {
         )}
       </Card>
 
-      <Card className="p-4 gradient-card border-2 border-primary/20">
-        <div className="space-y-3">
-          <div className="grid grid-cols-4 gap-2">
+      <Card className="p-4 gradient-card border-2 border-primary/20 flex-1 flex flex-col">
+        <div className="space-y-3 h-full flex flex-col">
+          <div className="grid grid-cols-4 gap-2 flex-1">
             {validKeys.map((key) => (
               <Button
                 key={key}
                 onClick={() => handleKeyPress(key)}
                 variant="secondary"
-                className="h-14 text-lg font-semibold hover:scale-105 transition-transform"
+                className="h-full min-h-[60px] text-xl font-semibold hover:scale-105 transition-transform"
               >
                 {key}
               </Button>
             ))}
           </div>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-2 flex-shrink-0">
             <Button
               onClick={handleBackspace}
               variant="outline"
-              className="h-12 border-destructive/50 hover:bg-destructive/10"
+              className="h-14 border-destructive/50 hover:bg-destructive/10"
             >
               <Delete className="h-5 w-5 mr-2" />
               Delete
@@ -228,17 +228,13 @@ export const BaseConverter = () => {
             <Button
               onClick={handleClear}
               variant="outline"
-              className="h-12 border-accent/50 hover:bg-accent/10"
+              className="h-14 border-accent/50 hover:bg-accent/10"
             >
               Clear
             </Button>
           </div>
         </div>
       </Card>
-
-      <div className="text-center text-sm text-muted-foreground">
-        <p>Works offline • Install to home screen</p>
-      </div>
     </div>
   );
 };
