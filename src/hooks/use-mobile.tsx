@@ -2,6 +2,11 @@ import * as React from "react";
 
 const MOBILE_BREAKPOINT = 768;
 
+/**
+ * Media-query hook to detect mobile viewport.
+ *
+ * @returns true if window width is less than 768px, else false
+ */
 export function useIsMobile() {
   const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined);
 

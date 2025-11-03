@@ -7,8 +7,14 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { AlertCircle, ArrowRight, Delete } from "lucide-react";
 
+/**
+ * Supported number bases.
+ */
 type Base = "Bin" | "Oct" | "Dec" | "Hex";
 
+/**
+ * Mapping from base label to radix value used by parseInt/toString.
+ */
 const baseMap: Record<Base, number> = {
   Bin: 2,
   Oct: 8,
@@ -16,6 +22,12 @@ const baseMap: Record<Base, number> = {
   Hex: 16,
 };
 
+/**
+ * Returns the set of valid keypad characters for a given input base.
+ *
+ * @param base - Selected input base
+ * @returns Array of permitted characters
+ */
 const getValidKeys = (base: Base): string[] => {
   switch (base) {
     case "Bin":
@@ -29,6 +41,12 @@ const getValidKeys = (base: Base): string[] => {
   }
 };
 
+/**
+ * Interactive base converter component.
+ *
+ * Handles input validation and number base conversion between
+ * Binary, Octal, Decimal, and Hexadecimal.
+ */
 export const BaseConverter = () => {
   const [convertFrom, setConvertFrom] = useState<Base>("Dec");
   const [convertTo, setConvertTo] = useState<Base>("Hex");
@@ -36,6 +54,14 @@ export const BaseConverter = () => {
   const [error, setError] = useState("");
   const [result, setResult] = useState("");
 
+  /**
+   * Validates input against the selected base and computes the converted value.
+   * Updates `error` and `result` state accordingly.
+   *
+   * @param value - Raw input value
+   * @param from - Source base
+   * @param to - Target base
+   */
   const validateAndConvert = (value: string, from: Base, to: Base) => {
     if (!value) {
       setError("");
@@ -83,33 +109,51 @@ export const BaseConverter = () => {
     }
   };
 
+  /**
+   * Synchronizes input value and triggers validation/conversion.
+   */
   const handleInputChange = (value: string) => {
     setInputValue(value);
     validateAndConvert(value, convertFrom, convertTo);
   };
 
+  /**
+   * Handles changes to the source base.
+   */
   const handleFromChange = (value: Base) => {
     setConvertFrom(value);
     validateAndConvert(inputValue, value, convertTo);
   };
 
+  /**
+   * Handles changes to the target base.
+   */
   const handleToChange = (value: Base) => {
     setConvertTo(value);
     validateAndConvert(inputValue, convertFrom, value);
   };
 
+  /**
+   * Appends a keypad character and re-validates.
+   */
   const handleKeyPress = (key: string) => {
     const newValue = inputValue + key;
     setInputValue(newValue);
     validateAndConvert(newValue, convertFrom, convertTo);
   };
 
+  /**
+   * Removes the last character and re-validates.
+   */
   const handleBackspace = () => {
     const newValue = inputValue.slice(0, -1);
     setInputValue(newValue);
     validateAndConvert(newValue, convertFrom, convertTo);
   };
 
+  /**
+   * Clears input, result, and error state.
+   */
   const handleClear = () => {
     setInputValue("");
     setResult("");
