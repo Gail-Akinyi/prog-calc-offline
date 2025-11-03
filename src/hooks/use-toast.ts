@@ -5,6 +5,9 @@ import type { ToastActionElement, ToastProps } from "@/components/ui/toast";
 const TOAST_LIMIT = 1;
 const TOAST_REMOVE_DELAY = 1000000;
 
+/**
+ * Toast object shape used internally by the toast store.
+ */
 type ToasterToast = ToastProps & {
   id: string;
   title?: React.ReactNode;
@@ -12,6 +15,9 @@ type ToasterToast = ToastProps & {
   action?: ToastActionElement;
 };
 
+/**
+ * Supported actions for the toast reducer.
+ */
 const actionTypes = {
   ADD_TOAST: "ADD_TOAST",
   UPDATE_TOAST: "UPDATE_TOAST",
@@ -21,6 +27,9 @@ const actionTypes = {
 
 let count = 0;
 
+/**
+ * Generates a stable incremental string id.
+ */
 function genId() {
   count = (count + 1) % Number.MAX_SAFE_INTEGER;
   return count.toString();
@@ -68,6 +77,9 @@ const addToRemoveQueue = (toastId: string) => {
   toastTimeouts.set(toastId, timeout);
 };
 
+/**
+ * Reducer for toast state transitions.
+ */
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case "ADD_TOAST":
@@ -134,6 +146,10 @@ function dispatch(action: Action) {
 
 type Toast = Omit<ToasterToast, "id">;
 
+/**
+ * Imperative API to show a toast.
+ * Returns handlers to update or dismiss the toast.
+ */
 function toast({ ...props }: Toast) {
   const id = genId();
 
@@ -163,6 +179,11 @@ function toast({ ...props }: Toast) {
   };
 }
 
+/**
+ * Hook exposing the toast state and helpers.
+ *
+ * @returns current toasts, `toast` factory, and `dismiss` function
+ */
 function useToast() {
   const [state, setState] = React.useState<State>(memoryState);
 

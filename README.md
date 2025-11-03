@@ -1,73 +1,81 @@
-# Welcome to your Lovable project
+# Conversions Calc
 
-## Project info
+Fast, offline programmer's calculator for converting between Binary, Octal, Decimal, and Hexadecimal number systems. Ships as a PWA for instant mobile install.
 
-**URL**: https://lovable.dev/projects/b7fc61a0-ffa0-4aae-8b20-dfaf37ff6aab
+## Tech Stack
+- **Vite** (React + SWC)
+- **TypeScript**
+- **React 18** with **React Router**
+- **shadcn/ui** + **Radix UI** primitives
+- **Tailwind CSS**
+- **@tanstack/react-query**
+- **vite-plugin-pwa** (offline support)
 
-## How can I edit this code?
+## Folder Structure
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/b7fc61a0-ffa0-4aae-8b20-dfaf37ff6aab) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+root/
+├── public/                 # Static assets (icons, robots.txt)
+├── src/
+│   ├── components/
+│   │   ├── BaseConverter.tsx  # Core conversion UI and logic
+│   │   └── ui/                # Reusable UI primitives (shadcn/ui)
+│   ├── hooks/                 # Custom React hooks
+│   ├── lib/                   # Utilities (e.g., className merger)
+│   ├── pages/                 # Route-level components (Index, NotFound)
+│   ├── App.tsx                # Router, providers, toasters
+│   └── main.tsx               # App entry
+├── index.html                 # HTML entry, meta/SEO
+├── vite.config.ts             # Vite + PWA configuration
+├── tailwind.config.ts         # Tailwind config
+├── package.json               # Scripts and dependencies
+└── docs/                      # Project documentation (this repo)
 ```
 
-**Edit a file directly in GitHub**
+## Key Features
+- **Base conversions**: Bin ↔ Oct ↔ Dec ↔ Hex
+- **Validation**: Inline validation based on selected input base
+- **Responsive UI**: Mobile-friendly keypad
+- **Offline-ready**: PWA with caching
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Getting Started
 
-**Use GitHub Codespaces**
+### Prerequisites
+- Node.js 18+ and npm
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Installation
+```bash
+npm install
+```
 
-## What technologies are used for this project?
+### Running the App (Dev)
+```bash
+npm run dev
+# Default: http://localhost:8080
+```
 
-This project is built with:
+### Build for Production
+```bash
+npm run build
+npm run preview
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## How It Works (Overview)
+- Routing lives in `App.tsx` using `react-router-dom` with routes for `/` and a catch-all `NotFound`.
+- `BaseConverter.tsx` handles selection of input/output bases, validates input per base, converts via `parseInt(value, radix)` and `Number.prototype.toString(radix)`.
+- Global providers: `@tanstack/react-query` client, tooltip provider, and toast systems are wired in `App.tsx`.
+- PWA config and caching strategy are defined in `vite.config.ts` via `vite-plugin-pwa`.
 
-## How can I deploy this project?
+## Contributing
+See `docs/contributing.md` for coding standards, local dev, and PR workflow.
 
-Simply open [Lovable](https://lovable.dev/projects/b7fc61a0-ffa0-4aae-8b20-dfaf37ff6aab) and click on Share -> Publish.
+## Configuration
+See `docs/configuration.md` for environment variables and build settings.
 
-## Can I connect a custom domain to my Lovable project?
+## License
+No license is currently specified. ⚠️ Possible assumption: consider adopting **MIT License** for open-source distribution, or add a proprietary license as needed.
 
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## Further Reading
+- Architecture: `docs/architecture.md`
+- Modules: `docs/modules.md`
+- API/Routes: `docs/api.md`
